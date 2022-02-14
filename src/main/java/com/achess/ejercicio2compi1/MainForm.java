@@ -3,6 +3,9 @@
  */
 package com.achess.ejercicio2compi1;
 
+import java.io.Reader;
+import java.io.StringReader;
+
 /**
  *
  * @author achess
@@ -25,21 +28,82 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        inputText = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        showText = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setForeground(java.awt.Color.white);
+
+        inputText.setBackground(java.awt.Color.lightGray);
+        inputText.setColumns(20);
+        inputText.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        inputText.setRows(5);
+        jScrollPane1.setViewportView(inputText);
+
+        jScrollPane2.setForeground(java.awt.Color.white);
+
+        showText.setEditable(false);
+        showText.setBackground(java.awt.Color.lightGray);
+        showText.setColumns(20);
+        showText.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        showText.setRows(5);
+        jScrollPane2.setViewportView(showText);
+
+        jButton1.setText("Analizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(192, 192, 192))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addGap(31, 31, 31)
+                .addComponent(jButton1)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Reader reader = new StringReader(inputText.getText());
+        Lexer lexer = new Lexer(reader);
+        try {
+            int output = lexer.yylex();
+            while (output != Lexer.YYEOF) {
+                lexer.yylex();
+            }
+            String info = "";
+            info += lexer.info();
+            info += lexer.getInfoInts();
+            showText.setText(info);
+        } catch (Exception e) {
+            System.out.println("Atrape un error y lo maneje de forma correcta");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -52,7 +116,7 @@ public class MainForm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -77,5 +141,10 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea inputText;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea showText;
     // End of variables declaration//GEN-END:variables
 }
